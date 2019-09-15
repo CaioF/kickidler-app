@@ -27,12 +27,12 @@ export default class Form extends Component {
 
   handleClick(event) {
     console.log(this.state);
-    fetch('http://localhost:3000/', {
+    fetch('http://localhost:3000/send', {
       body: JSON.stringify(this.state),
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json; charset=utf-8'
       },
       method: 'POST',
       mode: 'cors',
@@ -42,9 +42,9 @@ export default class Form extends Component {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          alert('Saved');
+          alert('Ваше КП готово!');
         } else {
-          alert('Issues saving');
+          alert('Ошибка сервера!');
         }
         // you cannot parse your "success" response, since that is not a valid JSON
         // consider using valid JSON req/resp pairs.
