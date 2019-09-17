@@ -42,9 +42,9 @@ export default class Form extends Component {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          setTimeout(function(){  window.location='http://192.168.19.217:8008/send' }, 700);
+          setTimeout(function(){  window.location='http://192.168.19.217:8008/send' }, 1200);
         } else {
-          alert('Ошибка сервера!');
+          alert('Ошибка сервера!\nПроверьте что все поля заполнены правильно');
         }
         // you cannot parse your "success" response, since that is not a valid JSON
         // consider using valid JSON req/resp pairs.
@@ -86,7 +86,7 @@ export default class Form extends Component {
                   <select name="seller" value={this.state.seller} onChange={(event)=>this.handleInputChange(event)}>
                     <option>Выберите одно</option>
                     <option>Кайо</option>
-                    <option>Александер</option>
+                    <option>Александр</option>
                     <option>Владмир</option>
                     <option>Кирилл</option>
                   </select>
