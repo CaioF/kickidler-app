@@ -16,22 +16,26 @@ function generatePdf(docDefinition, callback) {
     		italics: 'build/fonts/Roboto-Italic.ttf',
     		bolditalics: 'build/fonts/Roboto-MediumItalic.ttf'
 	    },
-      Raleway:
-      {
-        normal: 'build/fonts/Raleway-Regular.ttf',
-        medium: 'build/fonts/Raleway-Medium.ttf',
-        bold: 'build/fonts/Raleway-Bold.ttf',
-        italics: 'build/fonts/Raleway-Italic.ttf',
-        bolditalics: 'build/fonts/Raleway-MediumItalic.ttf',
-        light: 'build/fonts/Raleway-Light.ttf',
-        lightitalics: 'build/fonts/Raleway-LightItalic.ttf'
-      },
+      // Raleway:
+      // {
+      //   normal: 'build/fonts/Raleway-Regular.ttf',
+      //   medium: 'build/fonts/Raleway-Medium.ttf',
+      //   bold: 'build/fonts/Raleway-Bold.ttf',
+      //   italics: 'build/fonts/Raleway-Italic.ttf',
+      //   bolditalics: 'build/fonts/Raleway-MediumItalic.ttf',
+      //   light: 'build/fonts/Raleway-Light.ttf',
+      //   lightitalics: 'build/fonts/Raleway-LightItalic.ttf'
+      // },
       Gothic:
       {
         normal: 'build/fonts/GOTHIC.ttf',
         bold: 'build/fonts/GOTHICB.ttf',
         italics: 'build/fonts/GOTHICI.ttf',
         bolditalics: 'build/fonts/GOTHICBI.ttf'
+      },
+      Wingdings:
+      {
+        normal: 'build/fonts/Wingdings-Regular.ttf'
       }
     };
 
@@ -68,7 +72,7 @@ app.get('/send', function(req, res) {
   let PDFlang = {};
   let seller = [];
   let isRussian = 0;
-  //switch statements for pdf generation
+//switch statements for pdf generation
   switch (JSON.stringify(JSONanswer.lang).replace(/"/g,"")) {
   case "Русский":
     PDFlang = PDFlanguages.rus;
@@ -99,12 +103,12 @@ app.get('/send', function(req, res) {
   default:
     break;
   };
-
+//
   //pdf generation, minimize this unless working on it//
   let DOCdefinition = {
     content: [
-      { image: 'build/logo-big.png', style: 'imgcorner', width: 243, height: 62,  },
-      { text: JSON.stringify(PDFlang.h1).replace(/"/g,""), style: 'header', margin: [0, 0, 0, 60] },
+      { image: 'build/logo-big.png', style: 'imgcorner', width: 223, height: 57  },
+      { text: JSON.stringify(PDFlang.h1).replace(/"/g,""), style: 'header', margin: [0, 0, 0, 90] },
       { text: JSON.stringify(PDFlang.h2).replace(/"/g,""), style: 'subheader' },
       { text: JSON.stringify(JSONanswer.client).replace(/"/g,""), style: 'header', fontSize: 20, margin: [0, 0, 0, 20] },
       { text: JSON.stringify(PDFlang.h3).replace(/"/g,""), style: 'subheader' },
@@ -112,13 +116,13 @@ app.get('/send', function(req, res) {
       { image: 'build/pdfback.jpg', alignment: 'center' },
   		{
         pageBreak: 'before',
-        margin: [0, 0, 0, 50],
+        margin: [0, 0, 0, 30],
   			table: {
   				body: [
   					[
   						{
                 borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#1a2c69',
+  							fillColor: '#172259',
   							text: JSON.stringify(PDFlang.p1).replace(/"/g,""), style: 'headertable1'
   						}
             ],
@@ -131,21 +135,21 @@ app.get('/send', function(req, res) {
             [
   						{
                 borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#1a2c69',
+  							fillColor: '#172259',
   							text: JSON.stringify(PDFlang.p3).replace(/"/g,""), style: 'headertable1'
   						}
             ],
             [
               {
                 borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                stack: [
-                  '+' + JSON.stringify(PDFlang.p4).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p5).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p6).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p7).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p8).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p9).replace(/"/g,""),
-                  '+' + JSON.stringify(PDFlang.p10).replace(/"/g,"")
+                ul: [
+                  ' ' + JSON.stringify(PDFlang.p4).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p5).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p6).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p7).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p8).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p9).replace(/"/g,""),
+                  ' ' + JSON.stringify(PDFlang.p10).replace(/"/g,"")
                 ],
                  style: 'paratable1',
               }
@@ -153,7 +157,7 @@ app.get('/send', function(req, res) {
             [
   						{
                 borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#1a2c69',
+  							fillColor: '#172259',
   							text: JSON.stringify(PDFlang.p11).replace(/"/g,""), style: 'headertable1'
   						}
             ],
@@ -173,6 +177,7 @@ app.get('/send', function(req, res) {
   			}
       },
       {
+        margin: [0, 0, 0, 30],
         table: {
           body: [
             [
@@ -185,7 +190,7 @@ app.get('/send', function(req, res) {
             [
               {
                 borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                fillColor: '#c4d8f5',
+                fillColor: '#d8e6f2',
                 stack: [
                   JSON.stringify(PDFlang.p17).replace(/"/g,""),
                   ' ' + JSON.stringify(PDFlang.p18).replace(/"/g,""),
@@ -199,11 +204,21 @@ app.get('/send', function(req, res) {
           ]
         }
   		},
+      {
+        table: {
+          body: [
+            [{colSpan: 2, text: JSON.stringify(PDFlang.t1).replace(/"/g,"") }, {}],
+  					[{text: JSON.stringify(PDFlang.t2).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t3).replace(/"/g,"") },],
+            [{text: JSON.stringify(PDFlang.t4).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t5).replace(/"/g,"") + " " + JSON.stringify(JSONanswer.amount).replace(/"/g,"") + " " + JSON.stringify(PDFlang.t5_1[1]).replace(/"/g,"") }],
+            [{text: JSON.stringify(PDFlang.t6).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t7).replace(/"/g,"") },],
+          ]
+        },
+      }
   	],
   	styles: {
       imgcorner: {
         alignment: 'right',
-        margin: [0, 10, 0, 80]
+        margin: [0, 10, 0, 100]
       },
   		header: {
         font: 'Gothic',
@@ -248,4 +263,4 @@ app.post('/send', function (req, res) {
 });
 
 app.listen(8008);
-console.log("Server is running on port 8008, set to local IP 192.168.19.217, to change the IP edit form.jsx file and rebuild");
+console.log("Server is running on port 8008\nThe SPA is set to send POST requests to the IP 192.168.19.217\nTo change the IP edit the handleClick() function at src/components/form.jsx and rebuild");
