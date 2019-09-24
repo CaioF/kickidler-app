@@ -383,6 +383,23 @@ class DocBuilder {
               ]
             }
           },
+            {text: JSON.stringify(this.PDFlang.t22).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t23).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t24).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t25).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t26).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t27).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t28).replace(/"/g,"")},
+            {text: JSON.stringify(this.PDFlang.t29).replace(/"/g,"")},
+            {
+              margin: [0, 20, 0, 0],
+              table: {
+                body: [
+                  [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}],
+                  [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}]
+                ]
+              }
+            },
         ],
         styles: {
           imgcorner: {
