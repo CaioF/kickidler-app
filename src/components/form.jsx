@@ -42,7 +42,7 @@ export default class Form extends Component {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          setTimeout(function(){  window.location='http://192.168.19.217:8008/send' }, 1200);
+          window.location='http://192.168.19.217:8008/send';
         } else {
           alert('Ошибка сервера!\nПроверьте что все поля заполнены правильно');
         }
