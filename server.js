@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const pdfMakePrinter = require('pdfmake/src/printer');
 const app = express();
+const DocBuilder = require('./doc_builder.js');
 global.PDFlanguages = require('./public/templates_lang.js');
 global.JSONanswer = {};
 
@@ -16,16 +17,6 @@ function generatePdf(docDefinition, callback) {
     		italics: 'build/fonts/Roboto-Italic.ttf',
     		bolditalics: 'build/fonts/Roboto-MediumItalic.ttf'
 	    },
-      // Raleway:
-      // {
-      //   normal: 'build/fonts/Raleway-Regular.ttf',
-      //   medium: 'build/fonts/Raleway-Medium.ttf',
-      //   bold: 'build/fonts/Raleway-Bold.ttf',
-      //   italics: 'build/fonts/Raleway-Italic.ttf',
-      //   bolditalics: 'build/fonts/Raleway-MediumItalic.ttf',
-      //   light: 'build/fonts/Raleway-Light.ttf',
-      //   lightitalics: 'build/fonts/Raleway-LightItalic.ttf'
-      // },
       Gothic:
       {
         normal: 'build/fonts/GOTHIC.ttf',
@@ -69,189 +60,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/send', function(req, res) {
-  let PDFlang = {};
-  let seller = [];
-  let isRussian = 0;
-//switch statements for pdf generation
-  switch (JSON.stringify(JSONanswer.lang).replace(/"/g,"")) {
-  case "Русский":
-    PDFlang = PDFlanguages.rus;
-    isRussian = 1;
-    break;
-  case "Английский":
-    PDFlang = PDFlanguages.eng;
-    break;
-  case "Португальский":
-    PDFlang = PDFlanguages.por;
-    break;
-  default:
-    break;
-  };
-  switch (JSON.stringify(JSONanswer.seller).replace(/"/g,"")) {
-  case "Кайо":
-    seller = PDFlanguages.seller.Кайо;
-    break;
-  case "Александр":
-    seller = PDFlanguages.seller.Александр;
-    break;
-  case "Владмир":
-    seller = PDFlanguages.seller.Владмир;
-    break;
-  case "Кирилл":
-    seller = PDFlanguages.seller.Кирилл;
-    break;
-  default:
-    break;
-  };
-//
-  //pdf generation, minimize this unless working on it//
-  let DOCdefinition = {
-    content: [
-      { image: 'build/logo-big.png', style: 'imgcorner', width: 223, height: 57  },
-      { text: JSON.stringify(PDFlang.h1).replace(/"/g,""), style: 'header', margin: [0, 0, 0, 90] },
-      { text: JSON.stringify(PDFlang.h2).replace(/"/g,""), style: 'subheader' },
-      { text: JSON.stringify(JSONanswer.client).replace(/"/g,""), style: 'header', fontSize: 20, margin: [0, 0, 0, 20] },
-      { text: JSON.stringify(PDFlang.h3).replace(/"/g,""), style: 'subheader' },
-      { text: JSON.stringify(seller[isRussian]).replace(/"/g,"") + ' - Kickidler',  style: 'header', fontSize: 20, margin: [0, 0, 0, 110] },
-      { image: 'build/pdfback.jpg', alignment: 'center' },
-  		{
-        pageBreak: 'before',
-        margin: [0, 0, 0, 30],
-  			table: {
-  				body: [
-  					[
-  						{
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#172259',
-  							text: JSON.stringify(PDFlang.p1).replace(/"/g,""), style: 'headertable1'
-  						}
-            ],
-            [
-  						{
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							text: JSON.stringify(PDFlang.p2).replace(/"/g,""), style: 'paratable1'
-  						}
-            ],
-            [
-  						{
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#172259',
-  							text: JSON.stringify(PDFlang.p3).replace(/"/g,""), style: 'headertable1'
-  						}
-            ],
-            [
-              {
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                ul: [
-                  ' ' + JSON.stringify(PDFlang.p4).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p5).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p6).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p7).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p8).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p9).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p10).replace(/"/g,"")
-                ],
-                 style: 'paratable1',
-              }
-            ],
-            [
-  						{
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-  							fillColor: '#172259',
-  							text: JSON.stringify(PDFlang.p11).replace(/"/g,""), style: 'headertable1'
-  						}
-            ],
-            [
-              {
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                stack: [
-                  JSON.stringify(PDFlang.p12).replace(/"/g,""),
-                  JSON.stringify(PDFlang.p13).replace(/"/g,""),
-                  JSON.stringify(PDFlang.p14).replace(/"/g,""),
-                  JSON.stringify(PDFlang.p15).replace(/"/g,""),
-                ],
-                 style: 'paratable1'
-              }
-            ]
-          ]
-  			}
-      },
-      {
-        margin: [0, 0, 0, 30],
-        table: {
-          body: [
-            [
-              {
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                fillColor: '#004163',
-                text: JSON.stringify(PDFlang.p16).replace(/"/g,""), style: 'headertable1'
-              }
-            ],
-            [
-              {
-                borderColor: ['#e3e3e3', '#e3e3e3', '#e3e3e3', '#e3e3e3'],
-                fillColor: '#d8e6f2',
-                stack: [
-                  JSON.stringify(PDFlang.p17).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p18).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p19).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p20).replace(/"/g,""),
-                  ' ' + JSON.stringify(PDFlang.p21).replace(/"/g,""),
-                ],
-                 style: 'paratable1',
-              }
-            ]
-          ]
-        }
-  		},
-      {
-        table: {
-          body: [
-            [{colSpan: 2, text: JSON.stringify(PDFlang.t1).replace(/"/g,"") }, {}],
-  					[{text: JSON.stringify(PDFlang.t2).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t3).replace(/"/g,"") },],
-            [{text: JSON.stringify(PDFlang.t4).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t5).replace(/"/g,"") + " " + JSON.stringify(JSONanswer.amount).replace(/"/g,"") + " " + JSON.stringify(PDFlang.t5_1[1]).replace(/"/g,"") }],
-            [{text: JSON.stringify(PDFlang.t6).replace(/"/g,"") },{text: JSON.stringify(PDFlang.t7).replace(/"/g,"") },],
-          ]
-        },
-      }
-  	],
-  	styles: {
-      imgcorner: {
-        alignment: 'right',
-        margin: [0, 10, 0, 100]
-      },
-  		header: {
-        font: 'Gothic',
-        alignment: 'center',
-  			fontSize: 28,
-  			bold: true,
-        color: 'grey',
-  		},
-  		subheader: {
-        font: 'Gothic',
-        alignment: 'center',
-  			fontSize: 16,
-  			bold: true,
-        color: 'silver',
-  		},
-      headertable1: {
-        font: 'Gothic',
-        alignment: 'center',
-        fontSize: 10,
-        bold: true,
-        color: 'white'
-      },
-      paratable1: {
-        font: 'Gothic',
-        fontSize: 11,
-        bold: false,
-        color: 'black'
-      },
-  	}
-  };
-  /////////
-
-  generatePdf(DOCdefinition, (response) => {
+  const thisBuilder = new DocBuilder(JSONanswer);
+  generatePdf(thisBuilder.buildDoc(), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(response); // Buffer data
   });
