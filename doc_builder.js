@@ -1,7 +1,7 @@
 class DocBuilder {
   constructor(JSONanswer) {
     this.JSONanswer = JSONanswer;
-    this.withClientCoin = 1;
+    this.withConversion = 1;
     //switch statements for pdf generation
     //language definition switch
     switch (JSON.stringify(this.JSONanswer.lang).replace(/"/g,"")) {
@@ -40,16 +40,51 @@ class DocBuilder {
     //origin_currency definition switch
     switch (JSON.stringify(this.JSONanswer.origin_currency).replace(/"/g,"")) {
     case "RUB":
-      this.prices = PDFlanguages.prices.rub;
+       this.price =
+      {
+        prices: PDFlanguages.currency.prices_rub,
+        name: PDFlanguages.currency.name[0],
+        symbol: PDFlanguages.currency.symbol[0]
+      };
       break;
     case "USD":
-      this.prices = PDFlanguages.prices.usd;
+      this.price =
+      {
+        prices: PDFlanguages.currency.prices_usd,
+        name: PDFlanguages.currency.name[1],
+        symbol: PDFlanguages.currency.symbol[1]
+      };
       break;
     default:
       this.prices = [];
       break;
     };
-
+    //building the currencies object
+    if(JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"") == "Без конверции валют")
+    {
+      this.currencies =
+      {
+        origin: this.price,
+        client: {}
+      };
+      this.withConversion = 0;
+    }
+    else
+    {
+      let str = JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"").split("-")
+      this.currencies =
+      {
+        origin: this.price,
+        client:
+        {
+          conversion: this.JSONanswer.conversion_rate,
+          name: str[0],
+          symbol: str[1],
+        }
+      }
+    };
+    
+    //calculator
     this.monthPricesData = {};
 
     this.paymentTypePercent = {
@@ -57,7 +92,7 @@ class DocBuilder {
       bank:   3.8,
     };
 
-    for(let month in this.prices){
+    for(let month in this.currencies.origin.prices){
       month = +month;
 
       let discountPercent = 0;
@@ -78,16 +113,14 @@ class DocBuilder {
               discountPercent = this.JSONanswer.discount_lifetime;
             }
             break;
-        }
-
       this.monthPricesData[month].price = this.prices[month];
       this.monthPricesData[month].discountPercent = discountPercent;
       this.monthPricesData[month].calc_result = this.priceMonthCalculate(month);
     }
   }
-
+    
   buildDoc() {
-    if(this.withClientCoin = 0)
+    if(this.withConversion = 0)
     {
       var DOCdefinition = {
         content: [
@@ -362,7 +395,12 @@ class DocBuilder {
               widths: [95, 75, 65, 75, 80, "*"],
               heights: 20,
               body: [
-                [{text: JSON.stringify(this.PDFlang.t8).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t9).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t10).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t11).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t12).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t13).replace(/"/g,"")}]
+                [{text: JSON.stringify(this.PDFlang.t8).replace(/"/g,"")},
+                {text: JSON.stringify(this.PDFlang.t9).replace(/"/g,"")},
+                {text: JSON.stringify(this.PDFlang.t10).replace(/"/g,"") + " " + JSON.stringify(this.currencies.origin.name).replace(/"/g,"")},
+                {text: JSON.stringify(this.PDFlang.t11).replace(/"/g,"")},
+                {text: JSON.stringify(this.PDFlang.t12).replace(/"/g,"") + " " + JSON.stringify(this.currencies.client.name).replace(/"/g,"")},
+                {text: JSON.stringify(this.PDFlang.t13).replace(/"/g,"")}]
               ]
             }
           },

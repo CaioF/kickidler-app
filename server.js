@@ -61,6 +61,7 @@ app.get('/', function(req, res) {
 
 app.get('/send', function(req, res) {
   const thisBuilder = new DocBuilder(JSONanswer);
+
   const pricesJSON = thisBuilder.getPricesData([1,3,6,12]); // array argument with month count items, 0 = lifetime, empty or [] return full month list
   setTimeout(function () {
     console.log("!" + JSON.stringify(pricesJSON)); //?

@@ -192,8 +192,10 @@ module.exports = global.PDFlanguages = {
     t35: "Número"
   },
   currency: {
-    name: [ "EUR", "USD", "BRL", "RUB" ],
-    symbol: [ "€", "$", "R$", "₽" ]
+    name: [ "RUB", "USD", "BRL", "EUR", "INR", "KZT", "BYR", "GBP", "CNY" ],
+    symbol: [ "₽", "$", "R$", "€", "₹", "₸", "Br", "£", "¥"],
+    prices_usd: [ 9.99, 24, 30, 50, 100, 170 ],
+    prices_rub: [ 600, 1440, 1800, 3000, 6000 ]
   },
   prices: {
     usd: { 1: 9.99, 3: 24, 6: 30, 12: 50, 36: 100, 0: 170 },

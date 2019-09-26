@@ -106,8 +106,13 @@ export default class Form extends Component {
                 <select name="conversion_currency" value={this.state.conversion_currency} onChange={(event)=>this.handleInputChange(event)}>
                   <option>Выберите одно</option>
                   <option>Без конверции валют</option>
-                  <option>EUR</option>
-                  <option>BRL</option>
+                  <option>EUR-€</option>
+                  <option>BRL-R$</option>
+                  <option>INR-₹</option>
+                  <option>KZT-₸</option>
+                  <option>BYR-Br</option>
+                  <option>GBP-£</option>
+                  <option>CNY-¥</option>
                 </select>
               </div>
             </div>
