@@ -116,6 +116,7 @@ class DocBuilder {
       this.monthPricesData[month].price = this.prices[month];
       this.monthPricesData[month].discountPercent = discountPercent;
       this.monthPricesData[month].calc_result = this.priceMonthCalculate(month);
+      }
     }
   }
     
