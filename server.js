@@ -69,6 +69,7 @@ app.get('/send', function(req, res) {
 
 app.post('/send', function (req, res) {
   JSONanswer = req.body;
+  console.log(JSONanswer);
   res.redirect('../send');
 });
 
