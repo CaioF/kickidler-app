@@ -56,6 +56,7 @@ class DocBuilder {
       };
       break;
     default:
+      this.prices = [];
       break;
     };
     //building the currencies object
@@ -82,51 +83,42 @@ class DocBuilder {
         }
       }
     };
+    
+    //calculator
+    this.monthPricesData = {};
 
-  //   this.monthPricesData = {
-  //     1:  {price: 9.99},
-  //     3:  {price: 24},
-  //     6:  {price: 30},
-  //     12: {price: 50},
-  //     36: {price: 100},
-  //     0:  {price: 170}, // lifetitme
-  //   };
-  //
-  //   this.paymentTypePercent = {
-  //     payPal: 2.9,
-  //     bank:   3.8,
-  //   };
-  //
-  //   for(let month in this.monthPricesData){
-  //     month = +month;
-  //
-  //     let discountPercent = 0;
-  //
-  //       switch(month){
-  //         case 12:
-  //           if(!!this.JSONanswer.discount_year){
-  //             discountPercent = this.JSONanswer.discount_year;
-  //           }
-  //           break;
-  //         case 36:
-  //           if(!!this.JSONanswer.discount_3years){
-  //             discountPercent = this.JSONanswer.discount_3years;
-  //           }
-  //           break;
-  //         case 0:
-  //           if(!!this.JSONanswer.discount_lifetime){
-  //             discountPercent = this.JSONanswer.discount_lifetime;
-  //           }
-  //           break;
-  //       }
-  //
-  //     this.monthPricesData[month].discountPercent = discountPercent;
-  //     this.monthPricesData[month].calc_result = this.priceMonthCalculate(month);
-  //
-  //   }
+    this.paymentTypePercent = {
+      payPal: 2.9,
+      bank:   3.8,
+    };
 
-   }
+    for(let month in this.currencies.origin.prices){
+      month = +month;
 
+      let discountPercent = 0;
+
+        switch(month){
+          case 12:
+            if(!!this.JSONanswer.discount_year){
+              discountPercent = this.JSONanswer.discount_year;
+            }
+            break;
+          case 36:
+            if(!!this.JSONanswer.discount_3years){
+              discountPercent = this.JSONanswer.discount_3years;
+            }
+            break;
+          case 0:
+            if(!!this.JSONanswer.discount_lifetime){
+              discountPercent = this.JSONanswer.discount_lifetime;
+            }
+            break;
+      this.monthPricesData[month].price = this.prices[month];
+      this.monthPricesData[month].discountPercent = discountPercent;
+      this.monthPricesData[month].calc_result = this.priceMonthCalculate(month);
+    }
+  }
+    
   buildDoc() {
     if(this.withConversion = 0)
     {
@@ -534,30 +526,45 @@ class DocBuilder {
     return DOCdefinition;
   }
 
-  // priceMonthCalculate(month){
-  //   let calcResult = {};
-  //
-  //   let licenseCount = this.JSONanswer.amount;
-  //   let monthCount = !!month ? month : 120;
-  //
-  //   calcResult.price = licenseCount * this.monthPricesData[month].price;
-  //   calcResult.discount = calcResult.price * (+this.monthPricesData[month].discountPercent / 100);
-  //   calcResult.priceWithDiscount = calcResult.price - calcResult.discount;
-  //
-  //   for(let payment in this.paymentTypePercent){
-  //     calcResult[payment] = {};
-  //
-  //     calcResult[payment].price = calcResult.priceWithDiscount + (calcResult.priceWithDiscount * (this.paymentTypePercent[payment] / 100));
-  //     calcResult[payment].price = Math.floor(calcResult[payment].price * 100) / 100;
-  //
-  //     calcResult[payment].priceMonth = calcResult[payment].price / monthCount;
-  //     calcResult[payment].priceMonth = Math.floor(calcResult[payment].priceMonth * 100) / 100;
-  //
-  //     calcResult[payment].licensePriceMonth = calcResult[payment].priceMonth / licenseCount;
-  //     calcResult[payment].licensePriceMonth = Math.floor(calcResult[payment].licensePriceMonth * 100) / 100;
-  //   }
-  //   return calcResult;
-  // }
+  priceMonthCalculate(month){
+    let calcResult = {};
+
+    let licenseCount = this.JSONanswer.amount;
+    let monthCount = !!month ? month : 120;
+
+    calcResult.price = licenseCount * this.monthPricesData[month].price;
+    calcResult.discount = calcResult.price * (+this.monthPricesData[month].discountPercent / 100);
+    calcResult.priceWithDiscount = calcResult.price - calcResult.discount;
+
+    for(let payment in this.paymentTypePercent){
+      calcResult[payment] = {};
+
+      calcResult[payment].price = calcResult.priceWithDiscount + (calcResult.priceWithDiscount * (this.paymentTypePercent[payment] / 100));
+      calcResult[payment].price = Math.floor(calcResult[payment].price * 100) / 100;
+
+      calcResult[payment].priceMonth = calcResult[payment].price / monthCount;
+      calcResult[payment].priceMonth = Math.floor(calcResult[payment].priceMonth * 100) / 100;
+
+      calcResult[payment].licensePriceMonth = calcResult[payment].priceMonth / licenseCount;
+      calcResult[payment].licensePriceMonth = Math.floor(calcResult[payment].licensePriceMonth * 100) / 100;
+    }
+    return calcResult;
+  }
+
+  getPricesData(months){
+    let result = {};
+    if(!months || !Array.isArray(months) || !months.length){
+      result = this.monthPricesData;
+    }
+    else{
+      months.forEach(function(item) {
+        if(typeof this.monthPricesData[item] !== "undefined"){
+          result[item] = this.monthPricesData[item];
+        }
+      });
+    }
+    return result;
+  }
 }
 
 module.exports = DocBuilder;
