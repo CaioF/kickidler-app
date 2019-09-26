@@ -46,24 +46,18 @@ class DocBuilder {
       this.prices = PDFlanguages.prices.usd;
       break;
     default:
+      this.prices = [];
       break;
     };
 
-    this.monthPricesData = {
-      1:  {price: 9.99},
-      3:  {price: 24},
-      6:  {price: 30},
-      12: {price: 50},
-      36: {price: 100},
-      0:  {price: 170}, // lifetitme
-    };
+    this.monthPricesData = {};
 
     this.paymentTypePercent = {
       payPal: 2.9,
       bank:   3.8,
     };
 
-    for(let month in this.monthPricesData){
+    for(let month in this.prices){
       month = +month;
 
       let discountPercent = 0;
@@ -86,9 +80,9 @@ class DocBuilder {
             break;
         }
 
+      this.monthPricesData[month].price = this.prices[month];
       this.monthPricesData[month].discountPercent = discountPercent;
       this.monthPricesData[month].calc_result = this.priceMonthCalculate(month);
-
     }
   }
 
@@ -517,6 +511,21 @@ class DocBuilder {
       calcResult[payment].licensePriceMonth = Math.floor(calcResult[payment].licensePriceMonth * 100) / 100;
     }
     return calcResult;
+  }
+
+  getPricesData(months){
+    let result = {};
+    if(!months || !Array.isArray(months) || !months.length){
+      result = this.monthPricesData;
+    }
+    else{
+      months.forEach(function(item) {
+        if(typeof this.monthPricesData[item] !== "undefined"){
+          result[item] = this.monthPricesData[item];
+        }
+      });
+    }
+    return result;
   }
 }
 
