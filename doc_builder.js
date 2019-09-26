@@ -3,6 +3,7 @@ class DocBuilder {
     this.JSONanswer = JSONanswer;
     this.withClientCoin = 1;
     //switch statements for pdf generation
+    //language definition switch
     switch (JSON.stringify(this.JSONanswer.lang).replace(/"/g,"")) {
     case "Русский":
       this.PDFlang = PDFlanguages.rus;
@@ -19,6 +20,7 @@ class DocBuilder {
     default:
       break;
     };
+    //seller definition switch
     switch (JSON.stringify(this.JSONanswer.seller).replace(/"/g,"")) {
     case "Кайо":
       this.seller = PDFlanguages.seller.Кайо;
@@ -31,6 +33,17 @@ class DocBuilder {
       break;
     case "Кирилл":
       this.seller = PDFlanguages.seller.Кирилл;
+      break;
+    default:
+      break;
+    };
+    //origin_currency definition switch
+    switch (JSON.stringify(this.JSONanswer.origin_currency).replace(/"/g,"")) {
+    case "RUB":
+      this.prices = PDFlanguages.prices.rub;
+      break;
+    case "USD":
+      this.prices = PDFlanguages.prices.usd;
       break;
     default:
       break;
@@ -503,7 +516,6 @@ class DocBuilder {
       calcResult[payment].licensePriceMonth = calcResult[payment].priceMonth / licenseCount;
       calcResult[payment].licensePriceMonth = Math.floor(calcResult[payment].licensePriceMonth * 100) / 100;
     }
-
     return calcResult;
   }
 }

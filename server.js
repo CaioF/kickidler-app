@@ -61,6 +61,9 @@ app.get('/', function(req, res) {
 
 app.get('/send', function(req, res) {
   const thisBuilder = new DocBuilder(JSONanswer);
+  setTimeout(function () {
+    console.log("!" + JSON.stringify(thisBuilder.priceMonthCalculate(1))); //?
+  }, 1000);
   generatePdf(thisBuilder.buildDoc(), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(response); // Buffer data
