@@ -1,6 +1,7 @@
 class DocBuilder {
   constructor(JSONanswer) {
     this.JSONanswer = JSONanswer;
+    this.JSONcurrencies = PDFlanguages.currency;
     this.withConversion = 1;
     //switch statements for pdf generation
     //language definition switch
@@ -85,7 +86,7 @@ class DocBuilder {
     };
    }
 
-  buildDoc() {
+  buildDoc(pdfTablePrices) {
     if(this.withConversion = 0)
     {
       var DOCdefinition = {
@@ -490,32 +491,66 @@ class DocBuilder {
       };
     }
     return DOCdefinition;
-  }
-
-  calculatePricesSimple()
-  {
-    return 0;
-  }
-
-  calculatePricesComplex()
-  {
-    return 0;
-  }
+  };
 
   calculatePrices()
   {
-    let priceforX = currencies.origin.prices.map(function(element) {
-	     return element*Number(this.JSONanswer.amount);
-     });
+    let priceForX = this.currencies.origin.prices.map((element) => {
+	    return element*Number(this.JSONanswer.amount);
+    }); //Стоимость для x
+    console.log(priceForX);
+    let temp_array1 = Array.from(priceForX);
+    let priceDiscounted = temp_array1.splice(-3);
+    let temp_array2 = [(priceDiscounted[0] - priceDiscounted[0]*Number(this.JSONanswer.discount_year)/100),(priceDiscounted[1] - priceDiscounted[1]*Number(this.JSONanswer.discount_3years)/100),(priceDiscounted[2] - priceDiscounted[2]*Number(this.JSONanswer.discount_lifetime)/100)];
+    priceDiscounted = temp_array1.concat(temp_array2); //Результат со скидкой
+
+    let pdfTablePrices = {};
 
     if(this.withConversion == 0)
     {
-      calculatePricesSimple();
+      temp_array1 = [];
+      for (let i = 0; i < priceDiscounted.length; i++)
+      {
+        temp_array1[i] = (priceDiscounted[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount).toFixed(2));
+      };
+      pdfTablePrices =
+      {
+        priceForX: priceForX,
+        priceDiscounted: priceDiscounted,
+        priceMonthUser: temp_array1
+      };
     }
     else
     {
-      calculatePricesComplex();
+      temp_array1 = [];
+      temp_array2 = [];
+      let bankTarrif = priceDiscounted.map((element) => {
+        return ((element+(element*3.8))*Number(this.JSONanswer.conversion_rate));
+      }); //Bank array
+      let paypalTarrif = priceDiscounted.map((element) => {
+        return ((element+(element*2.9))*Number(this.JSONanswer.conversion_rate));
+      }); //Paypal array
+      for (let i = 0; i < bankTarrif.length; i++)
+      {
+        temp_array1[i] = (bankTarrif[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount).toFixed(2));
+      };
+      for (let i = 0; i < paypalTarrif.length; i++)
+      {
+        temp_array2[i] = (paypalTarrif[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)).toFixed(2);
+      };
+
+      pdfTablePrices =
+      {
+        priceForX: priceForX,
+        priceDiscounted: priceDiscounted,
+        priceBank: bankTarrif,
+        pricePaypal: paypalTarrif,
+        priceMonthUser1: temp_array1,
+        priceMonthUser2: temp_array1
+      }
     }
+
+    return pdfTablePrices;
   }
 
 }

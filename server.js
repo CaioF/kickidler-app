@@ -61,7 +61,9 @@ app.get('/', function(req, res) {
 
 app.get('/send', function(req, res) {
   const thisBuilder = new DocBuilder(JSONanswer);
-  generatePdf(thisBuilder.buildDoc(), (response) => {
+  let pdfTablePrices = thisBuilder.calculatePrices();
+  console.log(pdfTablePrices);
+  generatePdf(thisBuilder.buildDoc(pdfTablePrices), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(response); // Buffer data
   });
@@ -69,7 +71,6 @@ app.get('/send', function(req, res) {
 
 app.post('/send', function (req, res) {
   JSONanswer = req.body;
-  console.log(JSONanswer);
   res.redirect('../send');
 });
 
