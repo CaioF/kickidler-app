@@ -525,18 +525,18 @@ class DocBuilder {
       temp_array1 = [];
       temp_array2 = [];
       let bankTarrif = priceDiscounted.map((element) => {
-        return ((element+(element*3.8))*Number(this.JSONanswer.conversion_rate));
+        return Number(((element*1.038)*Number(this.JSONanswer.conversion_rate)).toFixed(2));
       }); //Bank array
       let paypalTarrif = priceDiscounted.map((element) => {
-        return ((element+(element*2.9))*Number(this.JSONanswer.conversion_rate));
+        return Number(((element*1.029)*Number(this.JSONanswer.conversion_rate)).toFixed(2));
       }); //Paypal array
       for (let i = 0; i < bankTarrif.length; i++)
       {
-        temp_array1[i] = (bankTarrif[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount).toFixed(2));
+        temp_array1[i] = Number((bankTarrif[i]/(this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)) ).toFixed(2) );
       };
       for (let i = 0; i < paypalTarrif.length; i++)
       {
-        temp_array2[i] = (paypalTarrif[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)).toFixed(2);
+        temp_array2[i] = Number((paypalTarrif[i]/(this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)) ).toFixed(2) );
       };
 
       pdfTablePrices =
@@ -546,7 +546,7 @@ class DocBuilder {
         priceBank: bankTarrif,
         pricePaypal: paypalTarrif,
         priceMonthUser1: temp_array1,
-        priceMonthUser2: temp_array1
+        priceMonthUser2: temp_array2
       }
     }
 

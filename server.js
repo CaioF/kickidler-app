@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
 app.get('/send', function(req, res) {
   const thisBuilder = new DocBuilder(JSONanswer);
   let pdfTablePrices = thisBuilder.calculatePrices();
-  console.log(pdfTablePrices);
+  console.log("!", pdfTablePrices);
   generatePdf(thisBuilder.buildDoc(pdfTablePrices), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(response); // Buffer data
@@ -75,4 +75,4 @@ app.post('/send', function (req, res) {
 });
 
 app.listen(8008);
-console.log("Server is running on port 8008\nThe SPA is set to send POST requests to the IP 192.168.19.217\nTo change the IP edit the handleClick() function at src/components/form.jsx and rebuild");
+console.log("Server is running on port 8008\nThe SPA is set to send POST requests to the IP http://192.168.1.62\nTo change the IP edit the handleClick() function at src/components/form.jsx and rebuild");

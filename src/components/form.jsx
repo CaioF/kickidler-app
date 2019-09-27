@@ -27,7 +27,7 @@ export default class Form extends Component {
 
   handleClick(event) {
     console.log(this.state);
-    fetch('http://192.168.19.217:8008/send', {
+    fetch('http://192.168.1.62:8008/send', {
       body: JSON.stringify(this.state),
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -42,7 +42,7 @@ export default class Form extends Component {
       .then(function (response) {
         console.log(response);
         if (response.status === 200) {
-          window.location='http://192.168.19.217:8008/send';
+          window.location='http://192.168.1.62:8008/send';
         } else {
           alert('Ошибка сервера!\nПроверьте что все поля заполнены правильно');
         }
