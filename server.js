@@ -4,7 +4,7 @@ const path = require('path');
 const pdfMakePrinter = require('pdfmake/src/printer');
 const app = express();
 const DocBuilder = require('./doc_builder.js');
-global.PDFlanguages = require('./public/templates_lang.js');
+global.PDFlanguages = require('./templates_lang.js');
 global.JSONanswer = {};
 
 function generatePdf(docDefinition, callback) {
