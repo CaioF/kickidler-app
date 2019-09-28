@@ -72,7 +72,6 @@ class DocBuilder {
     else
     {
       let str = JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"").split("-");
-      console.log(str);
       this.currencies =
       {
         origin: this.price,
@@ -598,7 +597,6 @@ class DocBuilder {
     let priceForX = this.currencies.origin.prices.map((element) => {
 	    return element*Number(this.JSONanswer.amount);
     }); //Стоимость для x
-    console.log(priceForX);
     let temp_array1 = Array.from(priceForX);
     let priceDiscounted = temp_array1.splice(-3);
     let temp_array2 = [(priceDiscounted[0] - priceDiscounted[0]*Number(this.JSONanswer.discount_year)/100),(priceDiscounted[1] - priceDiscounted[1]*Number(this.JSONanswer.discount_3years)/100),(priceDiscounted[2] - priceDiscounted[2]*Number(this.JSONanswer.discount_lifetime)/100)];

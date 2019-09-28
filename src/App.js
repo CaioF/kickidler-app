@@ -10,6 +10,7 @@ function App() {
         <ul>
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/info">INFO</Link></li>
+          <li><Link onClick={ () => window.location='https://cloud.mongodb.com/v2/5d8efdc4c56c9839eee19e39#clusters/detail/Cluster0-kickidlerapp'}>ADMIN</Link></li>
         </ul>
         <header className="App-header">
           <img src={"logo-big.png"} alt="logo" />
