@@ -201,7 +201,7 @@ module.exports = global.PDFlanguages = {
     name: [ "RUB", "USD", "BRL", "EUR", "INR", "KZT", "BYR", "GBP", "CNY" ],
     symbol: [ "₽", "$", "R$", "€", "₹", "₸", "Br", "£", "¥"],
     prices_usd: [ 9.99, 24, 30, 50, 100, 170 ],
-    prices_rub: [ 600, 1440, 1800, 3000, 6000 ],
+    prices_rub: [ 600, 1440, 1800, 3000, 6000, 10000 ],
     durations: [1, 3, 6, 12, 36, 120]
   },
   seller: {
