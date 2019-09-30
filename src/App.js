@@ -11,7 +11,7 @@ function App() {
         <ul>
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/info">GRAPHIC</Link></li>
-          <li><Link onClick={() => window.location='https://docs.mongodb.com/manual/reference/mongo-shell/'}>DB MANAGER</Link></li>
+          <li><Link onClick={() => window.location='https://cloud.mongodb.com/v2/5d8efdc4c56c9839eee19e39?#metrics/replicaSet/5d8eff40a6f239253a58ba46/explorer/Cluster0-kickidlerapp/test/find'}>DB MANAGER</Link></li>
         </ul>
         <header className="App-header">
           <img src={"logo-big.png"} alt="logo" />

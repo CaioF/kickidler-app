@@ -13,14 +13,15 @@ global.PDFlanguages = require('./templates_lang.js');
 global.JSONanswer = {};
 
 //mongodb//
-const uri = "mongodb://127.0.0.1:27017";
+const uri = "
+";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   if (err) return console.log(err);
   assert.equal(null, err);
   app.listen(8008, () =>
   {
-    console.log("> Connected successfully to the mongodb server\n> Express server is running on 127.0.0.1:8008\n> To have the app working at your IP:\n> 1.Edit the IPv4 form.jsx and graphic.jsx at src/components/\n> 2.Rebuild with 'npm run build'");
+    console.log("> Connected successfully to the mongodb server\n> Express server is running on 'IPv4':8008\n> To have the app working at your IP:\n> 1.Edit the IPv4 form.jsx and graphic.jsx at src/components/\n> 2.Rebuild with 'npm run build'");
   });
 });
 
@@ -43,7 +44,7 @@ app.get('/send', (req, res) => {
 
 app.get('/graphic-backend', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  client.db("kickidler-test").collection("test2").find().toArray().then((docs) => {
+  client.db("Cluster0-kickidlerapp").collection("test").find().toArray().then((docs) => {
       let sellerID = 0;
       let counterAmount = [0, 0, 0, 0];
       let counterDiscount = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
@@ -79,7 +80,7 @@ app.get('/graphic-backend', (req, res) => {
 
 app.post('/pdf-backend', (req, res) => {
   JSONanswer = req.body;
-  client.db("kickidler-test").collection("test2").insertOne(JSONanswer, (err, result) => {
+  client.db("Cluster0-kickidlerapp").collection("test").insertOne(JSONanswer, (err, result) => {
     assert.equal(null, err);
     console.log("input saved to database");
     res.redirect('../send');

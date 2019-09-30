@@ -17,7 +17,7 @@ export default class Graphics extends Component {
     }
       // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
     callBackendAPI = async () => {
-      const response = await fetch('http://192.168.0.12:8008/graphic-backend');
+      const response = await fetch('http://192.168.19.217:8008/graphic-backend'); //IPv4
       const body = await response.json();
 
       if (response.status !== 200) {
