@@ -96,7 +96,6 @@ class DocBuilder {
         this.discounts[i] = `${this.discounts[i]}%`;
       }
     };
-    console.log(this.discounts);
    }
 
   buildDoc(pdfTablePrices) {

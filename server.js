@@ -70,7 +70,6 @@ app.get('/graphic-backend', (req, res) => {
         counterDiscount[1][sellerID] += Number(item.discount_3years);
         counterDiscount[2][sellerID] += Number(item.discount_lifetime);
       });
-      console.log(`1 ${counterAmount}`);
       res.send({express: counterAmount});
     }).catch((err) => {
       console.log(err);
@@ -81,7 +80,7 @@ app.post('/pdf-backend', (req, res) => {
   JSONanswer = req.body;
   client.db("Cluster0-kickidlerapp").collection("test").insertOne(JSONanswer, (err, result) => {
     assert.equal(null, err);
-    console.log("input saved to database");
+    console.log("> New input saved to database");
     res.redirect('../send');
   });
 });

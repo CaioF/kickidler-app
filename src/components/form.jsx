@@ -103,7 +103,8 @@ export default class Form extends Component {
               <div>
                 <select name="conversion_currency" value={this.state.conversion_currency} onChange={(event)=>this.handleInputChange(event)}>
                   <option>Выберите одно</option>
-                  <option>Без конверции валют</option>
+                  <option>Без конверции (Русский КП)</option>
+                  <option>USD-$</option>
                   <option>EUR-€</option>
                   <option>BRL-R$</option>
                   <option>INR-₹</option>
@@ -116,7 +117,7 @@ export default class Form extends Component {
             </div>
             <div className="wrap-input100 rs1-wrap-input100">
               <span className="label-input100">Курс валют</span>
-              <textarea className="input100" name="conversion_rate" value={this.state.conversion_rate} onChange={(event)=>this.handleInputChange(event)} placeholder="Если валюта клиента = RUB или USD — оставьте это поле пусто и выберите 'Без конверции валют' в поле 'Валюта Клиента'"/>
+              <textarea className="input100" name="conversion_rate" value={this.state.conversion_rate} onChange={(event)=>this.handleInputChange(event)} placeholder="Если валюта клиента = RUB — оставьте это поле пусто и выберите 'Без конверции валют' в поле 'Валюта Клиента'. Если валюта перевода и клиента = USD — напишите '1'"/>
             </div>
             <div className="wrap-input100">
               <span className="label-input100">Скидки *</span>
