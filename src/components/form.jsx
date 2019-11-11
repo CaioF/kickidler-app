@@ -87,6 +87,7 @@ export default class Form extends Component {
                     <option>Александр</option>
                     <option>Владмир</option>
                     <option>Кирилл</option>
+                    <option>Алехандро</option>
                   </select>
                 </div>
             </div>

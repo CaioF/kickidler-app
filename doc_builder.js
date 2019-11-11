@@ -35,6 +35,9 @@ class DocBuilder {
     case "Кирилл":
       this.seller = PDFlanguages.seller.Кирилл;
       break;
+      case "Алехандро":
+        this.seller = PDFlanguages.seller.Алехандро;
+        break;
     default:
       break;
     };

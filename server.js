@@ -65,6 +65,10 @@ app.get('/graphic-backend', (req, res) => {
         {
           sellerID = 3;
         }
+        else if(JSON.stringify(item.seller).replace(/"/g,"") == "Алехандро")
+        {
+          sellerID = 4;
+        }
         counterAmount[sellerID]++;
         counterDiscount[0][sellerID] += Number(item.discount_year);
         counterDiscount[1][sellerID] += Number(item.discount_3years);
