@@ -12,12 +12,12 @@ Change your terminal directory into the `kickidler-app` folder.<br>
 
 #### 3. `npm install`
 Installs all the required dependencies
-* **warning App is configured to work with nodejs 10.**<br>
+* **Warning! the app is configured to work with nodejs 10.**<br>
 
 #### 4. Поменяйте IP в файлах внутри папки компонентов
-App is configured to work on a local host via the local IPv4 adress. 
-a. Get your IPv4 via `ipconfig` (on Windows) or `ip addr show` (on Linux).
-c. Change the IPs on the files inside the `/components` folder.
+App is configured to work on a local host via the local IPv4 adress. Follow these steps to do so: 
+* a. Get your IPv4 via `ipconfig` (on Windows) or `ip addr show` (on Linux).
+* b. Change the IPs on the files inside the `/components` folder.
 
 #### 5. Добавляйте логин и пароль к `server.js`
 You need to add the login and password in order to gain acess to the remote mongodb database.
