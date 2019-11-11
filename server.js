@@ -130,8 +130,6 @@ function generatePdf(docDefinition, callback) {
     throw(err);
   }
 };
-<<<<<<< HEAD
-=======
 ///////////////////////////////////////////////////////////
 
 //server//
