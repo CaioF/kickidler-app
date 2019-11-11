@@ -32,7 +32,6 @@ Starts the app.<br>
 ### 8. Open your browser and type in: `http://your.ipv4.adress:8008`
 Opens the app.<br>
 <br>
-<br>
 ## BAT Executable for lazy managers:
 `@echo on`<br>
 `taskkill /IM "node.exe" /F`<br>
