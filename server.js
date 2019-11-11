@@ -160,4 +160,3 @@ app.post('/send', function (req, res) {
 
 app.listen(8008);
 console.log("Server is running on port 8008\nThe SPA is set to send POST requests to the IP 192.168.19.217\nTo change the IP edit the handleClick() function at src/components/form.jsx and rebuild");
->>>>>>> master
