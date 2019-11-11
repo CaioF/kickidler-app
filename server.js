@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.get('/send', (req, res) => {
   const thisBuilder = new DocBuilder(JSONanswer);
-  let pdfTablePrices = thisBuilder.calculatePrices();
+  let pdfTablePrices = thisBuilder.calculatePrices()
   generatePdf(thisBuilder.buildDoc(pdfTablePrices), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.send(response); // Buffer data
@@ -130,33 +130,3 @@ function generatePdf(docDefinition, callback) {
     throw(err);
   }
 };
-///////////////////////////////////////////////////////////
-
-//server//
-app.use(express.static(path.join(__dirname, 'build')));
-app.use(bodyParser.json());
-
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
-app.get('/send', function(req, res) {
-  const thisBuilder = new DocBuilder(JSONanswer);
-
-  const pricesJSON = thisBuilder.getPricesData([1,3,6,12]); // array argument with month count items, 0 = lifetime, empty or [] return full month list
-  setTimeout(function () {
-    console.log("!" + JSON.stringify(pricesJSON)); //?
-  }, 1000);
-  generatePdf(thisBuilder.buildDoc(pricesJSON), (response) => {
-    res.setHeader('Content-Type', 'application/pdf');
-    res.send(response); // Buffer data
-  });
-});
-
-app.post('/send', function (req, res) {
-  JSONanswer = req.body;
-  res.redirect('../send');
-});
-
-app.listen(8008);
-console.log("Server is running on port 8008\nThe SPA is set to send POST requests to the IP 192.168.19.217\nTo change the IP edit the handleClick() function at src/components/form.jsx and rebuild");
