@@ -763,8 +763,6 @@ class DocBuilder {
     return pdfTablePrices;
   }
 
-<<<<<<< HEAD
-=======
   priceMonthCalculate(month){
     let calcResult = {};
 
