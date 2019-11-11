@@ -48,12 +48,14 @@ module.exports = global.PDFlanguages = {
     t19: "Per Year",
     t20: "Per 3 Years",
     t21: "Lifetime",
+    d1: "%",
+    d2: "Non applicable",
     t22: "*          Estimated Paypal transfer fee of 2.9%",
     t23: " - For more information please access: www.paypal.com/us/for-you/transfer-money/send-money/send-money-internationally",
     t24: "*          Estimated Bank Invoice transfer fee of 3.8%",
     t25: " - For more information please contact your bank",
     t26: "**         Virtual cost is estimated via the formula [Estimated Total]/[Amount]/[License Duration]",
-    t27: " - Virtual cost serves as a reference value and many not be equal to the payment cost of the package",
+    t27: " - Virtual cost serves as a reference value and may not be equal to the payment cost of the package",
     t28: "***        You can also pay for the service package via TransferWise",
     t29: " - For more information please access: https://transferwise.com/",
     t30: "To accept or to further discuss this budget proposal please contact the responsible Kickidler employee",
@@ -112,12 +114,14 @@ module.exports = global.PDFlanguages = {
     t19: "Per Year",
     t20: "Per 3 Years",
     t21: "Lifetime",
+    d1: "%",
+    d2: "Non applicable",
     t22: "*          Estimated Paypal transfer fee of 2.9%",
     t23: " - For more information please access: www.paypal.com/us/for-you/transfer-money/send-money/send-money-internationally",
     t24: "*          Estimated Bank Invoice transfer fee of 3.8%",
     t25: " - For more information please contact your bank",
     t26: "**         Virtual cost is estimated via the formula [Estimated Total]/[Amount]/[License Duration]",
-    t27: " - Virtual cost serves as a reference value and many not be equal to the payment cost of the package",
+    t27: " - Virtual cost serves as a reference value and may not be equal to the payment cost of the package",
     t28: "***        You can also pay for the service package via TransferWise",
     t29: " - For more information please access: https://transferwise.com/",
     t30: "To accept or to further discuss this budget proposal please contact the responsible Kickidler employee",
@@ -176,6 +180,8 @@ module.exports = global.PDFlanguages = {
     t19: "Anual",
     t20: "Por 3 anos",
     t21: "Ilimitada",
+    d1: "%",
+    d2: "Não aplicavel",
     t22: "*          Taxa de transferência estimada do Paypal  =  2,9%",
     t23: " - Para mais informações acesse: https://www.paypal.com/pt/webapps/mpp/send-money-online",
     t24: "*          Taxa de transferência estimada do Invoice  =  3,8% (SWIFT 1% + emissão 2% + IOF 0,8%)",
@@ -195,7 +201,8 @@ module.exports = global.PDFlanguages = {
     name: [ "RUB", "USD", "BRL", "EUR", "INR", "KZT", "BYR", "GBP", "CNY" ],
     symbol: [ "₽", "$", "R$", "€", "₹", "₸", "Br", "£", "¥"],
     prices_usd: [ 9.99, 24, 30, 50, 100, 170 ],
-    prices_rub: [ 600, 1440, 1800, 3000, 6000 ]
+    prices_rub: [ 600, 1440, 1800, 3000, 6000, 10000 ],
+    durations: [1, 3, 6, 12, 36, 120]
   },
   prices: {
     usd: { 1: 9.99, 3: 24, 6: 30, 12: 50, 36: 100, 0: 170 },
@@ -205,6 +212,7 @@ module.exports = global.PDFlanguages = {
     Кайо: [ "Caio Fleury", "Кай Флеури", "k.fleury@kickidler.com", "какой-то номер" ],
     Александр: [ "Alexander Minev", "Александр Минеев", "какая-то почта", "какой-то номер" ],
     Владмир: [ "Vladmir Starovoitov", "Владимир Старовойтов", "какая-то почта", "какой-то номер" ],
-    Кирилл: [ "Kirill Martynov", "Кирилл Мартынов", "какая-то почта", "какой-то номер" ]
+    Кирилл: [ "Kirill Martynov", "Кирилл Мартынов", "какая-то почта", "какой-то номер" ],
+    Алехандро: [ "Alejandro Palunin", "Алехандро Палунин", "какая-то почта", "какой-то номер" ]
   }
 };

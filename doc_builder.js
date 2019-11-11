@@ -1,6 +1,7 @@
 class DocBuilder {
   constructor(JSONanswer) {
     this.JSONanswer = JSONanswer;
+    this.JSONcurrencies = PDFlanguages.currency;
     this.withConversion = 1;
     //switch statements for pdf generation
     //language definition switch
@@ -34,6 +35,9 @@ class DocBuilder {
     case "Кирилл":
       this.seller = PDFlanguages.seller.Кирилл;
       break;
+      case "Алехандро":
+        this.seller = PDFlanguages.seller.Алехандро;
+        break;
     default:
       break;
     };
@@ -67,11 +71,11 @@ class DocBuilder {
         origin: this.price,
         client: {}
       };
-      this.withConversion = 0;
+      // this.withConversion = 0;
     }
     else
     {
-      let str = JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"").split("-")
+      let str = JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"").split("-");
       this.currencies =
       {
         origin: this.price,
@@ -83,6 +87,24 @@ class DocBuilder {
         }
       }
     };
+<<<<<<< HEAD
+    //discount definition switch
+    this.discounts = [this.JSONanswer.discount_year, this.JSONanswer.discount_3years, this.JSONanswer.discount_lifetime];
+    for (let i = 0; i < 3; i++)
+    {
+      if (JSON.stringify(this.discounts[i]).replace(/"/g,"") == "0")
+      {
+        this.discounts[i] = JSON.stringify(this.PDFlang.d2).replace(/"/g,"");
+      }
+      else
+      {
+        this.discounts[i] = `${this.discounts[i]}%`;
+      }
+    };
+   }
+
+  buildDoc(pdfTablePrices) {
+=======
     
     //calculator
     this.monthPricesData = {};
@@ -121,6 +143,7 @@ class DocBuilder {
   }
     
   buildDoc() {
+>>>>>>> master
     if(this.withConversion = 0)
     {
       var DOCdefinition = {
@@ -273,7 +296,7 @@ class DocBuilder {
       var DOCdefinition = {
         pageMargins: [20, 60, 20, "*"],
         content: [
-          { image: 'build/logo-big.png', style: 'imgcorner', width: 223, height: 57  },
+          { image: 'build/logo-big.png', style: 'imgcorner', width: 170, height: 45  },
           { text: JSON.stringify(this.PDFlang.h1).replace(/"/g,""), style: 'header', margin: [0, 0, 0, 90] },
           { text: JSON.stringify(this.PDFlang.h2).replace(/"/g,""), style: 'subheader' },
           { text: JSON.stringify(this.JSONanswer.client).replace(/"/g,""), style: 'header', fontSize: 20, margin: [0, 0, 0, 20] },
@@ -382,112 +405,221 @@ class DocBuilder {
           {
             table: {
               body: [
-                [{colSpan: 2, text: JSON.stringify(this.PDFlang.t1).replace(/"/g,"") }, {}],
-                [{text: JSON.stringify(this.PDFlang.t2).replace(/"/g,"") },{text: JSON.stringify(this.PDFlang.t3).replace(/"/g,"") },],
-                [{text: JSON.stringify(this.PDFlang.t4).replace(/"/g,"") },{text: JSON.stringify(this.PDFlang.t5).replace(/"/g,"") + " " + JSON.stringify(this.JSONanswer.amount).replace(/"/g,"") + " " + JSON.stringify(this.PDFlang.t5_1[1]).replace(/"/g,"") }],
-                [{text: JSON.stringify(this.PDFlang.t6).replace(/"/g,"") },{text: JSON.stringify(this.PDFlang.t7).replace(/"/g,"") },],
+                [{colSpan: 2, text: JSON.stringify(this.PDFlang.t1).replace(/"/g,""), fillColor: '#444', style: 'headertable1' }, {}],
+                [{text: JSON.stringify(this.PDFlang.t2).replace(/"/g,""), fillColor: '#555', style: 'darkCol' },{text: JSON.stringify(this.PDFlang.t3).replace(/"/g,"") },],
+                [{text: JSON.stringify(this.PDFlang.t4).replace(/"/g,""), fillColor: '#555', style: 'darkCol' },{text: JSON.stringify(this.PDFlang.t5).replace(/"/g,"") + " " + JSON.stringify(this.JSONanswer.amount).replace(/"/g,"") + " " + JSON.stringify(this.PDFlang.t5_1[1]).replace(/"/g,"") }],
+                [{text: JSON.stringify(this.PDFlang.t6).replace(/"/g,""), fillColor: '#555', style: 'darkCol' },{text: JSON.stringify(this.PDFlang.t7).replace(/"/g,"") },],
               ]
             },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
           },
           {
             pageBreak: 'before',
-            margin: [0, 0, 0, 20],
+            margin: [0, 0, 0, 15],
             table: {
               widths: [95, 75, 65, 75, 80, "*"],
               heights: 20,
               body: [
-                [{text: JSON.stringify(this.PDFlang.t8).replace(/"/g,"")},
-                {text: JSON.stringify(this.PDFlang.t9).replace(/"/g,"")},
-                {text: JSON.stringify(this.PDFlang.t10).replace(/"/g,"") + " " + JSON.stringify(this.currencies.origin.name).replace(/"/g,"")},
-                {text: JSON.stringify(this.PDFlang.t11).replace(/"/g,"")},
-                {text: JSON.stringify(this.PDFlang.t12).replace(/"/g,"") + " " + JSON.stringify(this.currencies.client.name).replace(/"/g,"")},
-                {text: JSON.stringify(this.PDFlang.t13).replace(/"/g,"")}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t16).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t16).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t17).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t17).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t18).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t18).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t19).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t19).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t20).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t20).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-          {
-            margin: [0, 0, 0, 20],
-            table: {
-              widths: [95, 75, 65, 75, 80, "*"],
-              heights: 20,
-              body: [
-                [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}],
-                [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}]
-              ]
-            }
-          },
-            {text: JSON.stringify(this.PDFlang.t22).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t23).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t24).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t25).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t26).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t27).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t28).replace(/"/g,"")},
-            {text: JSON.stringify(this.PDFlang.t29).replace(/"/g,"")},
-            {
-              margin: [0, 20, 0, 0],
-              table: {
-                body: [
-                  [{text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}],
-                  [{text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},{text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},{},{},{},{}]
+                [
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t8).replace(/"/g,"")},
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t9).replace(/"/g,"")},
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t10).replace(/"/g,"") + " " + JSON.stringify(this.currencies.origin.name).replace(/"/g,"")},
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t11).replace(/"/g,"")},
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t12).replace(/"/g,"") + " " + JSON.stringify(this.currencies.client.name).replace(/"/g,"")},
+                  {style: 'darkHeader', text: JSON.stringify(this.PDFlang.t13).replace(/"/g,"")}
                 ]
-              }
+              ]
             },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t16).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[0] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[0] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[0] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t16).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[0] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[0] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[0] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t17).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[1] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[1] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[1] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t17).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[1] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[1] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[1] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t18).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[2] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[2] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[2] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t18).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[2] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.d2).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[2] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[2] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t19).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[3] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[0]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[3] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[3] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t19).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[3] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[0]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[3] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[3] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t20).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[4] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[1]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[4] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[4] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t20).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[4] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[1]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[4] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[4] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+          {
+            margin: [0, 0, 0, 10],
+            table: {
+              widths: [95, 75, 65, 75, 80, "*"],
+              heights: 20,
+              body: [
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t14).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[5] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[2]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.pricePaypal[5] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser1[5] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ],
+                [
+                  {style: 'darkCol2', text: JSON.stringify(this.PDFlang.t15).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.PDFlang.t21).replace(/"/g,"")},
+                  {style: 'simpleSymbolCol', text: pdfTablePrices.priceForX[5] + " " + JSON.stringify(this.currencies.origin.symbol).replace(/"/g,"")},
+                  {style: 'simpleCol', text: JSON.stringify(this.discounts[2]).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceBank[5] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")},
+                  {style: 'graySymbolCol', text: pdfTablePrices.priceMonthUser2[5] + " " + JSON.stringify(this.currencies.client.symbol).replace(/"/g,"")}
+                ]
+              ]
+            },
+            layout: {
+              hLineColor: '#ddd',
+              vLineColor: '#eee',
+            }
+          },
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t22).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t23).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t24).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t25).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t26).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t27).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t28).replace(/"/g,"")},
+            {style: 'Footnote', text: JSON.stringify(this.PDFlang.t29).replace(/"/g,"")}
         ],
         styles: {
           imgcorner: {
@@ -521,12 +653,122 @@ class DocBuilder {
             bold: false,
             color: 'black'
           },
+          darkCol: {
+            font: 'Gothic',
+            color: '#fff',
+            alignment: 'right',
+            margin: [0, 4]
+          },
+          darkHeader: {
+            font: 'Gothic',
+            color: '#fff',
+            alignment: 'center',
+            fillColor: '#333',
+            margin: [0, 4]
+          },
+          darkCol2: {
+            font: 'Gothic',
+            color: '#fff',
+            alignment: 'center',
+            fillColor: '#222',
+            margin: [0, 4]
+          },
+          grayCol: {
+            font: 'Gothic',
+            color: '#000',
+            alignment: 'center',
+            fillColor: '#ddd',
+            margin: [0, 4]
+          },
+          simpleCol: {
+            font: 'Gothic',
+            alignment: 'center',
+            margin: [0, 4]
+          },
+          simpleSymbolCol: {
+            alignment: 'center',
+            margin: [0, 4]
+          },
+          graySymbolCol: {
+            color: '#000',
+            alignment: 'center',
+            fillColor: '#ddd',
+            margin: [0, 4]
+          },
+          Footnote: {
+            font: 'Gothic',
+            color: '#383838',
+            alignment: 'left',
+            fontSize: 9,
+            margin: [0, 4]
+          },
         }
       };
     }
     return DOCdefinition;
+  };
+
+  calculatePrices()
+  {
+    let priceForX = this.currencies.origin.prices.map((element) => {
+	    return element*Number(this.JSONanswer.amount);
+    }); //Стоимость для x
+    let temp_array1 = Array.from(priceForX);
+    let priceDiscounted = temp_array1.splice(-3);
+    let temp_array2 = [(priceDiscounted[0] - priceDiscounted[0]*Number(this.JSONanswer.discount_year)/100),(priceDiscounted[1] - priceDiscounted[1]*Number(this.JSONanswer.discount_3years)/100),(priceDiscounted[2] - priceDiscounted[2]*Number(this.JSONanswer.discount_lifetime)/100)];
+    priceDiscounted = temp_array1.concat(temp_array2); //Результат со скидкой
+
+    let pdfTablePrices = {};
+
+    if(this.withConversion == 0)
+    {
+      temp_array1 = [];
+      for (let i = 0; i < priceDiscounted.length; i++)
+      {
+        temp_array1[i] = (priceDiscounted[i]/this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount).toFixed(2));
+      };
+      pdfTablePrices =
+      {
+        priceForX: priceForX,
+        priceDiscounted: priceDiscounted,
+        priceMonthUser: temp_array1
+      };
+    }
+    else
+    {
+      temp_array1 = [];
+      temp_array2 = [];
+      let bankTarrif = priceDiscounted.map((element) => {
+        return Number(((element*1.038)*Number(this.JSONanswer.conversion_rate)).toFixed(2));
+      }); //Bank array
+      let paypalTarrif = priceDiscounted.map((element) => {
+        return Number(((element*1.029)*Number(this.JSONanswer.conversion_rate)).toFixed(2));
+      }); //Paypal array
+      for (let i = 0; i < bankTarrif.length; i++)
+      {
+        temp_array1[i] = Number((bankTarrif[i]/(this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)) ).toFixed(2) );
+      };
+      for (let i = 0; i < paypalTarrif.length; i++)
+      {
+        temp_array2[i] = Number((paypalTarrif[i]/(this.JSONcurrencies.durations[i]*Number(this.JSONanswer.amount)) ).toFixed(2) );
+      };
+
+      pdfTablePrices =
+      {
+        priceForX: priceForX,
+        priceDiscounted: priceDiscounted,
+        priceBank: bankTarrif,
+        pricePaypal: paypalTarrif,
+        priceMonthUser1: temp_array1,
+        priceMonthUser2: temp_array2
+      }
+    }
+
+    return pdfTablePrices;
   }
 
+<<<<<<< HEAD
+=======
   priceMonthCalculate(month){
     let calcResult = {};
 
@@ -566,6 +808,7 @@ class DocBuilder {
     }
     return result;
   }
+>>>>>>> master
 }
 
 module.exports = DocBuilder;

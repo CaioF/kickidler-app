@@ -26,8 +26,7 @@ export default class Form extends Component {
   }
 
   handleClick(event) {
-    console.log(this.state);
-    fetch('http://192.168.19.217:8008/send', {
+    fetch('http://192.168.19.217:8008/pdf-backend', { //IPv4
       body: JSON.stringify(this.state),
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -40,9 +39,8 @@ export default class Form extends Component {
       referrer: 'no-referrer',
     })
       .then(function (response) {
-        console.log(response);
         if (response.status === 200) {
-          window.location='http://192.168.19.217:8008/send';
+          window.location='http://192.168.19.217:8008/send'; //IPv4
         } else {
           alert('Ошибка сервера!\nПроверьте что все поля заполнены правильно');
         }
@@ -89,6 +87,7 @@ export default class Form extends Component {
                     <option>Александр</option>
                     <option>Владмир</option>
                     <option>Кирилл</option>
+                    <option>Алехандро</option>
                   </select>
                 </div>
             </div>
@@ -105,7 +104,8 @@ export default class Form extends Component {
               <div>
                 <select name="conversion_currency" value={this.state.conversion_currency} onChange={(event)=>this.handleInputChange(event)}>
                   <option>Выберите одно</option>
-                  <option>Без конверции валют</option>
+                  <option>Без конверции (Русский КП)</option>
+                  <option>USD-$</option>
                   <option>EUR-€</option>
                   <option>BRL-R$</option>
                   <option>INR-₹</option>
@@ -118,7 +118,7 @@ export default class Form extends Component {
             </div>
             <div className="wrap-input100 rs1-wrap-input100">
               <span className="label-input100">Курс валют</span>
-              <textarea className="input100" name="conversion_rate" value={this.state.conversion_rate} onChange={(event)=>this.handleInputChange(event)} placeholder="Если валюта клиента = RUB или USD — оставьте это поле пусто и выберите 'Без конверции валют' в поле 'Валюта Клиента'"/>
+              <textarea className="input100" name="conversion_rate" value={this.state.conversion_rate} onChange={(event)=>this.handleInputChange(event)} placeholder="Если валюта клиента = RUB — оставьте это поле пусто и выберите 'Без конверции валют' в поле 'Валюта Клиента'. Если валюта перевода и клиента = USD — напишите '1'"/>
             </div>
             <div className="wrap-input100">
               <span className="label-input100">Скидки *</span>
