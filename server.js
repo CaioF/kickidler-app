@@ -13,7 +13,7 @@ global.PDFlanguages = require('./templates_lang.js');
 global.JSONanswer = {};
 
 //mongodb//
-const uri = "mongodb+srv://user:password@cluster0-kickidlerapp-5ozqk.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://fleury:IAlaZBfyz9fgrIUo@cluster0-kickidlerapp-5ozqk.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   if (err) return console.log(err);
