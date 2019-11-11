@@ -16,8 +16,8 @@ Installs all the required dependencies
 
 #### 4. Поменяйте IP в файлах внутри папки компонентов
 App is configured to work on a local host via the local IPv4 adress. Follow these steps to do so: 
-* a. Get your IPv4 via `ipconfig` (on Windows) or `ip addr show` (on Linux).
-* b. Change the IPs on the files inside the `/components` folder.
+* Get your IPv4 via `ipconfig` (on Windows) or `ip addr show` (on Linux).
+* Change the IPs on the files inside the `/components` folder.
 
 #### 5. Добавляйте логин и пароль к `server.js`
 You need to add the login and password in order to gain acess to the remote mongodb database.
