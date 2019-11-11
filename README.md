@@ -1,7 +1,7 @@
 # КП-шник Kickidler
 
 Приложение для оформления еормеческих предложений, система создана для автоматизирования и нормализирования оформления кп.<br>
-<br>
+
 ## Чтобы запустит приложение:
 
 ### 1. `git clone https://github.com/CaioF/kickidler-app.git`<br>
@@ -31,7 +31,7 @@ Starts the app.<br>
 
 ### 8. Open your browser and type in: `http://your.ipv4.adress:8008`
 Opens the app.<br>
-<br>
+
 ## BAT Executable for lazy managers:
 `@echo on`<br>
 `taskkill /IM "node.exe" /F`<br>
