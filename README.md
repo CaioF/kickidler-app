@@ -33,10 +33,10 @@ Starts the app.<br>
 Opens the app.<br>
 
 ## BAT Executable for lazy managers:
-`@echo on`
-`taskkill /IM "node.exe" /F`
-`cd C:\path\to\kickidler-app`
-`start cmd /k node server.js`
-`ping your.ipv4.adress`
-`start "" http://your.ipv4.adress:8008`
-`pause`
+`@echo on`<br>
+`taskkill /IM "node.exe" /F`<br>
+`cd C:\path\to\kickidler-app`<br>
+`start cmd /k node server.js`<br>
+`ping your.ipv4.adress`<br>
+`start "" http://your.ipv4.adress:8008`<br>
+`pause`<br>
