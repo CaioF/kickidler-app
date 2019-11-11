@@ -87,7 +87,6 @@ class DocBuilder {
         }
       }
     };
-<<<<<<< HEAD
     //discount definition switch
     this.discounts = [this.JSONanswer.discount_year, this.JSONanswer.discount_3years, this.JSONanswer.discount_lifetime];
     for (let i = 0; i < 3; i++)
@@ -104,8 +103,6 @@ class DocBuilder {
    }
 
   buildDoc(pdfTablePrices) {
-=======
-    
     //calculator
     this.monthPricesData = {};
 
@@ -143,7 +140,6 @@ class DocBuilder {
   }
     
   buildDoc() {
->>>>>>> master
     if(this.withConversion = 0)
     {
       var DOCdefinition = {
@@ -808,7 +804,6 @@ class DocBuilder {
     }
     return result;
   }
->>>>>>> master
 }
 
 module.exports = DocBuilder;
