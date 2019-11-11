@@ -29,5 +29,14 @@ Builds the app for production to the `build` folder.<br>
 ### 7. `node server.js`
 Starts the app.<br>
 
-### 8. Open your browser and type in: `your.ipv4.adress:8008`
+### 8. Open your browser and type in: `http://your.ipv4.adress:8008`
 Opens the app.<br>
+
+## BAT Executable for lazy managers:
+`@echo on
+taskkill /IM "node.exe" /F
+cd C:\path\to\kickidler-app
+start cmd /k node server.js
+ping your.ipv4.adress
+start "" http://your.ipv4.adress:8008
+pause`
