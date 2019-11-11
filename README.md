@@ -21,7 +21,7 @@ App is configured to work on a local host via the local IPv4 adress. Follow thes
 
 ### 5. Добавляйте логин и пароль к `server.js`
 You need to add the login and password in order to gain acess to the remote mongodb database.
-Get the credentials and put them at `const uri = "mongodb+srv://user:password@...`<br>
+Get the credentials from `trello.com/b/V9HAno5H/кп-шник` and put them at `const uri = "mongodb+srv://user:password@...`<br>
 
 ### 6. `npm run build`
 Builds the app for production to the `build` folder.<br>
