@@ -39,4 +39,4 @@ Opens the app.<br>
 `start cmd /k node server.js`<br>
 `ping your.ipv4.adress`<br>
 `start "" http://your.ipv4.adress:8008`<br>
-`pause`<br>
+`pause`
