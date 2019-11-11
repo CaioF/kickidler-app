@@ -72,7 +72,7 @@ export default class Form extends Component {
               <div>
                 <select name="lang" value={this.state.value} onChange={(event)=>this.handleInputChange(event)}>
                   <option>Выберите одно</option>
-                  <option>Русский</option>
+                  //<option>Русский</option>
                   <option>Английский</option>
                   <option>Португальский</option>
                 </select>
@@ -83,7 +83,7 @@ export default class Form extends Component {
                 <div>
                   <select name="seller" value={this.state.seller} onChange={(event)=>this.handleInputChange(event)}>
                     <option>Выберите одно</option>
-                    <option>Кайо</option>
+                    //<option>Кайо</option>
                     <option>Александр</option>
                     <option>Владмир</option>
                     <option>Кирилл</option>
@@ -104,7 +104,7 @@ export default class Form extends Component {
               <div>
                 <select name="conversion_currency" value={this.state.conversion_currency} onChange={(event)=>this.handleInputChange(event)}>
                   <option>Выберите одно</option>
-                  <option>Без конверции (Русский КП)</option>
+                  //<option>Без конверции (Русский КП)</option>
                   <option>USD-$</option>
                   <option>EUR-€</option>
                   <option>BRL-R$</option>
