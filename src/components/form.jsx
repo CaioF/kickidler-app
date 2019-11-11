@@ -98,6 +98,7 @@ export default class Form extends Component {
                   <option>USD</option>
                 </select>
               </div>
+              <br />
               <span className="label-input100">Валюта Клиента *</span>
               <div>
                 <select name="conversion_currency" value={this.state.conversion_currency} onChange={(event)=>this.handleInputChange(event)}>
