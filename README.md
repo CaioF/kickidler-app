@@ -28,5 +28,5 @@ Builds the app for production to the `build` folder.<br>
 #### 7. `node server.js`
 Starts the app.<br>
 
-#### 8. Open your browser and type in: `your.ipv4.adress:8123`
+#### 8. Open your browser and type in: `your.ipv4.adress:8008`
 Opens the app.
