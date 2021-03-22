@@ -1,21 +1,21 @@
 class DocBuilder {
   constructor(JSONanswer) {
     this.JSONanswer = JSONanswer;
-    this.JSONcurrencies = PDFlanguages.currency;
+    this.JSONcurrencies = global.PDFlanguages.currency;
     this.withConversion = 1;
     //switch statements for pdf generation
     //language definition switch
     switch (JSON.stringify(this.JSONanswer.lang).replace(/"/g,"")) {
     case "Русский":
-      this.PDFlang = PDFlanguages.rus;
+      this.PDFlang = global.PDFlanguages.rus;
       this.isRussian = 1;
       break;
     case "Английский":
-      this.PDFlang = PDFlanguages.eng;
+      this.PDFlang = global.PDFlanguages.eng;
       this.isRussian = 0;
       break;
     case "Португальский":
-      this.PDFlang = PDFlanguages.por;
+      this.PDFlang = global.PDFlanguages.por;
       this.isRussian = 0;
       break;
     default:
@@ -23,21 +23,15 @@ class DocBuilder {
     };
     //seller definition switch
     switch (JSON.stringify(this.JSONanswer.seller).replace(/"/g,"")) {
-    case "Кайо":
-      this.seller = PDFlanguages.seller.Кайо;
+    case "User 1":
+      this.seller = global.PDFlanguages.seller.user1;
       break;
-    case "Александр":
-      this.seller = PDFlanguages.seller.Александр;
+    case "User 2":
+      this.seller = global.PDFlanguages.seller.user2;
       break;
-    case "Владмир":
-      this.seller = PDFlanguages.seller.Владмир;
+    case "User 3":
+      this.seller = global.PDFlanguages.seller.user3;
       break;
-    case "Кирилл":
-      this.seller = PDFlanguages.seller.Кирилл;
-      break;
-      case "Алехандро":
-        this.seller = PDFlanguages.seller.Алехандро;
-        break;
     default:
       break;
     };
@@ -46,17 +40,17 @@ class DocBuilder {
     case "RUB":
        this.price =
       {
-        prices: PDFlanguages.currency.prices_rub,
-        name: PDFlanguages.currency.name[0],
-        symbol: PDFlanguages.currency.symbol[0]
+        prices: global.PDFlanguages.currency.prices_rub,
+        name: global.PDFlanguages.currency.name[0],
+        symbol: global.PDFlanguages.currency.symbol[0]
       };
       break;
     case "USD":
       this.price =
       {
-        prices: PDFlanguages.currency.prices_usd,
-        name: PDFlanguages.currency.name[1],
-        symbol: PDFlanguages.currency.symbol[1]
+        prices: global.PDFlanguages.currency.prices_usd,
+        name: global.PDFlanguages.currency.name[1],
+        symbol: global.PDFlanguages.currency.symbol[1]
       };
       break;
     default:
@@ -64,7 +58,7 @@ class DocBuilder {
       break;
     };
     //building the currencies object
-    if(JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"") == "Без конверции валют")
+    if(JSON.stringify(this.JSONanswer.conversion_currency).replace(/"/g,"") === "Без конверции валют")
     {
       this.currencies =
       {
@@ -91,7 +85,7 @@ class DocBuilder {
     this.discounts = [this.JSONanswer.discount_year, this.JSONanswer.discount_3years, this.JSONanswer.discount_lifetime];
     for (let i = 0; i < 3; i++)
     {
-      if (JSON.stringify(this.discounts[i]).replace(/"/g,"") == "0")
+      if (JSON.stringify(this.discounts[i]).replace(/"/g,"") === "0")
       {
         this.discounts[i] = JSON.stringify(this.PDFlang.d2).replace(/"/g,"");
       }
@@ -103,7 +97,7 @@ class DocBuilder {
    }
 
   buildDoc(pdfTablePrices) {
-    if(this.withConversion = 0)
+    if(this.withConversion === 0)
     {
       var DOCdefinition = {
         content: [
@@ -679,7 +673,7 @@ class DocBuilder {
 
     let pdfTablePrices = {};
 
-    if(this.withConversion == 0)
+    if(this.withConversion === 0)
     {
       temp_array1 = [];
       for (let i = 0; i < priceDiscounted.length; i++)

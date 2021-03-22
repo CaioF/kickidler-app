@@ -13,14 +13,14 @@ global.PDFlanguages = require('./templates_lang.js');
 global.JSONanswer = {};
 
 //mongodb//
-const uri = "mongodb+srv://user:password@cluster0-kickidlerapp-5ozqk.mongodb.net/test?retryWrites=true&w=majority";
+const uri = process.env.DBURI;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   if (err) return console.log(err);
   assert.equal(null, err);
-  app.listen(8008, () =>
+  app.listen(process.env.PORT || 8008, () =>
   {
-    console.log("> Connected successfully to the mongodb server\n> Express server is running on 'IPv4':8008\n> To have the app working at your IP:\n> 1.Edit the IPv4 form.jsx and graphic.jsx at src/components/\n> 2.Rebuild with 'npm run build'");
+    console.log("> Connected successfully to the mongodb server\n> Server is running on 'IPv4':process.env.PORT || 8008\n> To have the app working at your IP:\n> 1.Edit the IPv4 form.jsx and graphic.jsx at src/components/\n> 2.Rebuild with 'npm run build'");
   });
 });
 
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/send', (req, res) => {
-  const thisBuilder = new DocBuilder(JSONanswer);
+  const thisBuilder = new DocBuilder(global.global.JSONanswer);
   let pdfTablePrices = thisBuilder.calculatePrices()
   generatePdf(thisBuilder.buildDoc(pdfTablePrices), (response) => {
     res.setHeader('Content-Type', 'application/pdf');
@@ -43,31 +43,23 @@ app.get('/send', (req, res) => {
 
 app.get('/graphic-backend', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  client.db("Cluster0-kickidlerapp").collection("test").find().toArray().then((docs) => {
+  client.db("Cluster0").collection("test").find().toArray().then((docs) => {
       let sellerID = 0;
       let counterAmount = [0, 0, 0, 0];
       let counterDiscount = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
       docs.forEach( (item, index) =>
       {
-        if(JSON.stringify(item.seller).replace(/"/g,"") == "Кайо")
+        if(JSON.stringify(item.seller).replace(/"/g,"") === "User 1")
         {
           sellerID = 0;
         }
-        else if(JSON.stringify(item.seller).replace(/"/g,"") == "Александр")
+        else if(JSON.stringify(item.seller).replace(/"/g,"") === "User 2")
         {
           sellerID = 1;
         }
-        else if(JSON.stringify(item.seller).replace(/"/g,"") == "Владмир")
+        else if(JSON.stringify(item.seller).replace(/"/g,"") === "User 3")
         {
           sellerID = 2;
-        }
-        else if(JSON.stringify(item.seller).replace(/"/g,"") == "Кирилл")
-        {
-          sellerID = 3;
-        }
-        else if(JSON.stringify(item.seller).replace(/"/g,"") == "Алехандро")
-        {
-          sellerID = 4;
         }
         counterAmount[sellerID]++;
         counterDiscount[0][sellerID] += Number(item.discount_year);
@@ -81,8 +73,8 @@ app.get('/graphic-backend', (req, res) => {
 });
 
 app.post('/pdf-backend', (req, res) => {
-  JSONanswer = req.body;
-  client.db("Cluster0-kickidlerapp").collection("test").insertOne(JSONanswer, (err, result) => {
+  global.global.JSONanswer = req.body;
+  client.db("Cluster0-kickidlerapp").collection("test").insertOne(global.global.JSONanswer, (err, result) => {
     assert.equal(null, err);
     console.log("> New input saved to database");
     res.redirect('../send');

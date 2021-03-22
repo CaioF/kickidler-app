@@ -17,7 +17,7 @@ export default class Graphics extends Component {
     }
       // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
     callBackendAPI = async () => {
-      const response = await fetch('http://192.168.19.217:8008/graphic-backend'); //IPv4
+      const response = await fetch('/graphic-backend'); //IPv4
       const body = await response.json();
 
       if (response.status !== 200) {
@@ -33,10 +33,9 @@ export default class Graphics extends Component {
           chartType="ColumnChart"
           data={[
             ['Продавец', 'Количество КП'],
-            ['Кайо', this.state.data[0]],
-            ['Александр', this.state.data[1]],
-            ['Владмир', this.state.data[2]],
-            ['Кирилл', this.state.data[3]]
+            ['User 1', this.state.data[0]],
+            ['User 2', this.state.data[1]],
+            ['User 3', this.state.data[2]]
           ]}
           width="80%"
           height="500px"

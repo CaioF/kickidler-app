@@ -26,7 +26,7 @@ export default class Form extends Component {
   }
 
   handleClick(event) {
-    fetch('http://192.168.19.217:8008/pdf-backend', { //IPv4
+    fetch('/pdf-backend', { //IPv4
       body: JSON.stringify(this.state),
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -40,7 +40,7 @@ export default class Form extends Component {
     })
       .then(function (response) {
         if (response.status === 200) {
-          window.location='http://192.168.19.217:8008/send'; //IPv4
+          window.location='/send'; //IPv4
         } else {
           alert('Ошибка сервера!\nПроверьте что все поля заполнены правильно');
         }
@@ -82,10 +82,9 @@ export default class Form extends Component {
                 <div>
                   <select name="seller" value={this.state.seller} onChange={(event)=>this.handleInputChange(event)}>
                     <option>Выберите одно</option>
-                    <option>Александр</option>
-                    <option>Владмир</option>
-                    <option>Кирилл</option>
-                    <option>Алехандро</option>
+                    <option>User 1</option>
+                    <option>User 2</option>
+                    <option>User 3</option>
                   </select>
                 </div>
             </div>
