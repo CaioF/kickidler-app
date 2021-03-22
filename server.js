@@ -13,8 +13,8 @@ global.PDFlanguages = require('./templates_lang.js');
 global.JSONanswer = {};
 
 //mongodb//
-const uri = process.env.DBURI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+require('dotenv').config();
+const client = new MongoClient(process.env.DBURI, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   if (err) return console.log(err);
   assert.equal(null, err);
@@ -43,7 +43,7 @@ app.get('/send', (req, res) => {
 
 app.get('/graphic-backend', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  client.db("Cluster0").collection("test").find().toArray().then((docs) => {
+  client.db("dev").collection("test").find().toArray().then((docs) => {
       let sellerID = 0;
       let counterAmount = [0, 0, 0, 0];
       let counterDiscount = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
